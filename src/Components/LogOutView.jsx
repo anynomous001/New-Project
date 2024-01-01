@@ -1,28 +1,73 @@
 import React from 'react'
 import { FcGoogle } from "react-icons/fc";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-const LogOutView = () => {
+
+const LogOutView = ({ auth, setIsLoggedIn }) => {
+
+    function authSignInWithGoogle() {
+        console.log("Sign in with Google")
+        setIsLoggedIn(true)
+
+    }
+
+    function authSignInWithEmail() {
+        console.log("Sign in with email and password")
+    }
+
+    function authCreateAccountWithEmail() {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setIsLoggedIn(true)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+    }
+
+
+
     return (
-        <section className='w-full p-4 bg-red-200 flex-col flex justify-center items-center h-screen ' >
+        <section className='w-full p-4 bg-blue-200/80 flex-col flex justify-center items-center h-screen ' >
             <div className="w-4/5 flex flex-col  items-center p-4  border-2 border-red-800 h-[85%]">
                 <h1 className="text-6xl font-bold mb-8">Hoody</h1>
-                <button className="my-4 flex justify-center shadow-xl shadow-gray-500/30 gap-x-4 items-center bg-slate-50 py-4 hover:bg-slate-100 
+
+                <button
+                    onClick={authSignInWithGoogle}
+                    className="my-4 flex justify-center shadow-xl shadow-gray-500/30 gap-x-4 items-center bg-slate-50 py-4 hover:bg-slate-100 
                 font-semibold text-3xl w-[90%] rounded-lg   ">
                     <FcGoogle className=' ' />
                     <span> Sign In with Google</span>
                 </button>
 
                 <div className="flex flex-col justify-evenly h-[80%] w-[90%]  ">
-                    <input type="text" placeholder='Email' className="py-4 text-2xl text-gray-500 text-center
+
+                    <input
+                        type="text"
+                        placeholder='Email'
+                        className="py-4 text-2xl text-gray-500 text-center
                      font-semibold bg-slate-50 focus:bg-slate-100 w-full  rounded-lg border-4 border-black" />
-                    <input type="password" placeholder='Password' className="py-4 text-2xl text-gray-500
+
+                    <input
+                        type="password"
+                        placeholder='Password'
+                        className="py-4 text-2xl text-gray-500
                      text-center font-semibold bg-slate-50 focus:bg-slate-100 w-full rounded-lg border-4 border-black" />
-                    <button className="flex justify-center gap-x-4 items-center bg-yellow-300 border-4 border-b-8 hover:border-b-4 border-black py-4
+
+
+                    <button
+                        onClick={authSignInWithEmail}
+                        className="flex justify-center gap-x-4 items-center bg-yellow-300 border-4 border-b-8 hover:border-b-4 border-black py-4
                 font-semibold text-3xl  rounded-lg">
                         <span> Sign in</span>
                     </button>
-                    <button className="flex justify-center hover:text-white hover:bg-black gap-x-4 items-center bg-transparent border-4  border-black py-4 
+
+                    <button
+                        onClick={authCreateAccountWithEmail}
+                        className="flex justify-center hover:text-white hover:bg-black gap-x-4 items-center bg-transparent border-4  border-black py-4 
                 font-semibold text-3xl  rounded-lg   ">
                         <span> Create New Account</span>
                     </button>
