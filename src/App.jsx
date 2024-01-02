@@ -1,6 +1,6 @@
 import LogOutView from "./Components/LogOutView"
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogInView from "./Components/LogInView";
 import React from "react";
 
@@ -19,11 +19,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+
+  const [loogedIn, setLoggedIn] = React.useState(false)
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true)
+    } else {
+      setLoggedIn(true)
+    }
+  })
 
   return (
     <>
-      {isLoggedIn ? <LogInView /> : <LogOutView auth={auth} setIsLoggedIn={setIsLoggedIn} />}
+      {loogedIn ? <LogInView auth={auth} /> : <LogOutView auth={auth} />}
 
     </>
   )
