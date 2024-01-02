@@ -26,7 +26,7 @@ function App() {
     if (user) {
       setLoggedIn(true)
     } else {
-      setLoggedIn(true)
+      setLoggedIn(false)
     }
   })
 
