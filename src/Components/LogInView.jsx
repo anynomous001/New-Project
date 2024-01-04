@@ -1,10 +1,15 @@
 import React from 'react'
-import { TbDoorExit } from "react-icons/tb";
+import { TbDoorExit, TbRuler2 } from "react-icons/tb";
+import { ImCross } from "react-icons/im";
+
 import { signOut } from "firebase/auth";
 
 const LogInView = ({ auth }) => {
-    const user = auth.currentUser;
 
+    const user = auth.currentUser;
+    const [displayName, setDisplayName] = React.useState(' ')
+    const [photoURL, setphotoURL] = React.useState(' ')
+    const [update, setUpdate] = React.useState(false)
 
 
     function authSignOut() {
@@ -14,35 +19,68 @@ const LogInView = ({ auth }) => {
         });
     }
 
-    let displayName = ''
-    let photoURL = ''
 
+    React.useEffect(() => {
+        if (user !== null) {
+            if (user.displayName !== null && user.photoURL !== null) {
+                setDisplayName(user.displayName.split(' ')[0])
+                setphotoURL(user.photoURL)
+            } setTimeout(() => { setUpdate(true) }, 5000)
 
-    if (user !== null) {
-        displayName = user.displayName
-        photoURL = user.photoURL
-
-        if (displayName == null || photoURL == null) {
-            displayName = 'Friend';
-            photoURL = 'https://images.unsplash.com/photo-1548022401-6b11ed578cc7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
         }
+    }, [user]);
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setDisplayName(e.target.name.value.split(' ')[0])
+        setphotoURL(e.target.image.value)
     }
 
-
     return (
-        <div className='bg-blue-500 h-screen'>
+        <div className=' relative bg-blue-500'>
             <div className="bg-red-200 h-24 p-4 grid items-center ">
                 <TbDoorExit onClick={authSignOut} className='justify-self-end block hover:text-gray-800/40 hover:cursor-pointer border-2 border-black' size={35} />
             </div>
             <div className="h-screen p-6 flex flex-col items-center">
                 <img
-                    className='rounded-full w-24 h-24 '
+                    className='rounded-full w-24 h-24'
                     src={`${photoURL}`}
                     alt="User Profile Picture"
                 />
                 <h1 className="text-center mt-4 text-white text-2xl font-semibold">{`Hey ${displayName}, How Are You ?`}</h1>
+                <button onClick={() => setUpdate(true)} className='bg-yellow-300 border-2 border-black p-4 my-2 font-bold tracking-wide ' >Update Profile</button>
+                {update && <form onSubmit={handleSubmit} className="absolute gap-8 top-80 border-4 px-6 py-10 border-black bg-blue-300  w-[90%] flex flex-col items-center" >
+                    <div className="grid  w-full justify-items-end items-center  grid-cols-2   border-2 border-black">
+                        <h1 className="text-[2.5rem] font-bold">Update Profile</h1>
+                        <ImCross onClick={() => setUpdate(false)} size={25} className='text-gray-500  hover:text-black hover:cursor-pointer ' />
+                    </div>
+                    <input
+                        type="text"
+                        name='name'
+                        placeholder='Your Name'
+                        className="py-4 text-2xl text-gray-500 text-center
+                     font-semibold bg-slate-50 focus:bg-slate-100 w-[70%]  rounded-lg border-4 border-black" />
+
+                    <input
+                        type="text"
+                        name='image'
+                        placeholder='Put URL Of Your Image'
+                        className="py-4 text-2xl text-gray-500
+                     text-center font-semibold bg-slate-50 focus:bg-slate-100 w-[70%] rounded-lg border-4 border-black" />
+
+
+                    <button
+                        type='submit'
+                        className="flex justify-center gap-x-4 items-center w-[70%] bg-yellow-300 border-4 border-b-8 hover:border-b-4 border-black py-4
+                font-bold text-3xl  rounded-lg">
+                        <span> Update</span>
+                    </button>
+                </form>}
             </div>
-        </div>
+
+        </div >
     )
 }
 
