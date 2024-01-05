@@ -3,6 +3,7 @@ import { TbDoorExit, TbRuler2 } from "react-icons/tb";
 import { ImCross } from "react-icons/im";
 
 import { signOut, updateProfile } from "firebase/auth";
+import UpdateTextArea from './UpdateTextArea';
 
 
 const LogInView = ({ auth, db }) => {
@@ -45,7 +46,7 @@ const LogInView = ({ auth, db }) => {
         }).then(() => {
             console.log("Profile")
         }).catch((error) => {
-
+            console.log(error.message)
         })
 
 
@@ -100,12 +101,7 @@ const LogInView = ({ auth, db }) => {
                     </button>
                 </form>}
             </div>
-            <div className="bg-white py-10 flex flex-col items-center">
-                <textarea className='text-xl font-semibold border-4 border-black rounded-lg w-3/4 h-40 p-4' name="Text Area" placeholder='Write Your daily Update' id="" cols="30" rows="10"></textarea>
-                <button className='bg-yellow-300 border-2 border-black py-3 px-10 my-4 font-bold tracking-wide text-xl hover:bg-yellow-200 hover:cursor-pointer border-4 border-black '
-                >Post</button>
-
-            </div>
+            <UpdateTextArea db={db} />
         </div >
     )
 }
