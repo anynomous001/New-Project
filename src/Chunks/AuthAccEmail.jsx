@@ -26,21 +26,31 @@ const AuthAccEmail = ({ auth }) => {
             });
     }
 
-    function authCreateAccountWithEmail() {
+
+
+
+
+    function authCreateAccountWithEmail(e) {
+
+        e.preventDefault()
+
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
             })
             .catch((error) => {
                 console.log(error.message)
             });
+
+
     }
 
     return (
-        <>
+        <form className='space-y-6 ' onSubmit={authSignInWithEmail}>
             <input
                 type="text"
                 placeholder='Email'
                 value={email}
+                name='email'
                 onChange={(e) => setEmail(e.target.value)}
                 className="py-4 text-2xl text-gray-500 text-center
                      font-semibold bg-slate-50 focus:bg-slate-100 w-full  rounded-lg border-4 border-black" />
@@ -48,6 +58,7 @@ const AuthAccEmail = ({ auth }) => {
             <input
                 type="password"
                 value={password}
+                name='password'
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Password'
                 className="py-4 text-2xl text-gray-500
@@ -55,22 +66,19 @@ const AuthAccEmail = ({ auth }) => {
 
 
             <button
-                onClick={authSignInWithEmail}
-                className="flex justify-center gap-x-4 items-center bg-yellow-300 border-4 border-b-8 hover:border-b-4 border-black py-4
+                type='submit'
+                className="flex justify-center gap-x-4 items-center bg-yellow-300 border-4 border-b-8 hover:border-b-4 border-black py-4 w-full
                 font-semibold text-3xl  rounded-lg">
                 <span> Sign in</span>
             </button>
 
             <button
                 onClick={authCreateAccountWithEmail}
-                className="flex justify-center hover:text-white hover:bg-black gap-x-4 items-center bg-transparent border-4  border-black py-4 
+                className="flex w-full justify-center hover:text-white hover:bg-black gap-x-4 items-center bg-transparent border-4  border-black py-4 
                 font-semibold text-3xl  rounded-lg   ">
                 <span> Create New Account</span>
             </button>
-
-
-
-        </>
+        </form>
     )
 }
 

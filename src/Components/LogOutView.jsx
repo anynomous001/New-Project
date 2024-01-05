@@ -14,6 +14,7 @@ const LogOutView = ({ auth }) => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log('Signed With Google')
+
             }).catch((error) => {
                 console.log(error.message)
             });
@@ -42,7 +43,6 @@ const LogOutView = ({ auth }) => {
                     </button>
 
                     <AuthAccEmail auth={auth} />
-
 
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LogInView from "./Components/LogInView";
 import React from "react";
+import { getFirestore } from "firebase/firestore";
 
 
 
@@ -17,6 +18,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
 
 function App() {
 
@@ -32,7 +35,7 @@ function App() {
 
   return (
     <>
-      {loogedIn ? <LogInView auth={auth} /> : <LogOutView auth={auth} />}
+      {loogedIn ? <LogInView auth={auth} db={db} /> : <LogOutView auth={auth} />}
 
     </>
   )

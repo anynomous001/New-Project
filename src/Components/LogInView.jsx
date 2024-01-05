@@ -2,9 +2,10 @@ import React from 'react'
 import { TbDoorExit, TbRuler2 } from "react-icons/tb";
 import { ImCross } from "react-icons/im";
 
-import { signOut } from "firebase/auth";
+import { signOut, updateProfile } from "firebase/auth";
 
-const LogInView = ({ auth }) => {
+
+const LogInView = ({ auth, db }) => {
 
     const user = auth.currentUser;
     const [displayName, setDisplayName] = React.useState(' ')
@@ -25,33 +26,53 @@ const LogInView = ({ auth }) => {
             if (user.displayName !== null && user.photoURL !== null) {
                 setDisplayName(user.displayName.split(' ')[0])
                 setphotoURL(user.photoURL)
-            } setTimeout(() => { setUpdate(true) }, 5000)
-
+            }
         }
     }, [user]);
 
+    function clearInputField(field) {
+        field.value = ""
+    }
 
-
-    const handleSubmit = (e) => {
+    const authUpdateProfile = (e) => {
         e.preventDefault()
         setDisplayName(e.target.name.value.split(' ')[0])
         setphotoURL(e.target.image.value)
+
+        updateProfile(auth.currentUser, {
+            displayName: displayName,
+            photoURL: photoURL,
+        }).then(() => {
+            console.log("Profile")
+        }).catch((error) => {
+
+        })
+
+
+        clearInputField(e.target.name)
+        clearInputField(e.target.image)
     }
 
     return (
-        <div className=' relative bg-blue-500'>
+        <div className='h-screen relative bg-blue-500'>
             <div className="bg-red-200 h-24 p-4 grid items-center ">
                 <TbDoorExit onClick={authSignOut} className='justify-self-end block hover:text-gray-800/40 hover:cursor-pointer border-2 border-black' size={35} />
             </div>
-            <div className="h-screen p-6 flex flex-col items-center">
+            <div className=" bg-red-500  p-6 flex flex-col items-center">
                 <img
                     className='rounded-full w-24 h-24'
                     src={`${photoURL}`}
                     alt="User Profile Picture"
                 />
                 <h1 className="text-center mt-4 text-white text-2xl font-semibold">{`Hey ${displayName}, How Are You ?`}</h1>
-                <button onClick={() => setUpdate(true)} className='bg-yellow-300 border-2 border-black p-4 my-2 font-bold tracking-wide ' >Update Profile</button>
-                {update && <form onSubmit={handleSubmit} className="absolute gap-8 top-80 border-4 px-6 py-10 border-black bg-blue-300  w-[90%] flex flex-col items-center" >
+                <button
+                    onClick={() => setUpdate(true)}
+                    className='bg-yellow-300 border-2 border-black p-4 my-2 font-bold tracking-wide  text-xl hover:bg-yellow-200 hover:cursor-pointer border-4 border-black '
+                >Update Profile
+                </button>
+
+
+                {update && <form onSubmit={authUpdateProfile} className="absolute gap-8 top-80 border-4 px-6 py-10 border-black bg-blue-300  w-[90%] flex flex-col items-center" >
                     <div className="grid  w-full justify-items-end items-center  grid-cols-2   border-2 border-black">
                         <h1 className="text-[2.5rem] font-bold">Update Profile</h1>
                         <ImCross onClick={() => setUpdate(false)} size={25} className='text-gray-500  hover:text-black hover:cursor-pointer ' />
@@ -79,9 +100,16 @@ const LogInView = ({ auth }) => {
                     </button>
                 </form>}
             </div>
+            <div className="bg-white py-10 flex flex-col items-center">
+                <textarea className='text-xl font-semibold border-4 border-black rounded-lg w-3/4 h-40 p-4' name="Text Area" placeholder='Write Your daily Update' id="" cols="30" rows="10"></textarea>
+                <button className='bg-yellow-300 border-2 border-black py-3 px-10 my-4 font-bold tracking-wide text-xl hover:bg-yellow-200 hover:cursor-pointer border-4 border-black '
+                >Post</button>
 
+            </div>
         </div >
     )
 }
+
+
 
 export default LogInView
