@@ -1,17 +1,20 @@
 import React from 'react'
 import { TbDoorExit, TbRuler2 } from "react-icons/tb";
 import { ImCross } from "react-icons/im";
+import { FirebaseContext } from '../App'; // Correct the import
 
 import { signOut, updateProfile } from "firebase/auth";
 import UpdateTextArea from './UpdateTextArea';
 
 
-const LogInView = ({ auth, db }) => {
+const LogInView = () => {
+    const { auth, db } = React.useContext(FirebaseContext);
 
     const user = auth.currentUser;
     const [displayName, setDisplayName] = React.useState(' ')
     const [photoURL, setphotoURL] = React.useState(' ')
     const [update, setUpdate] = React.useState(false)
+
 
 
     function authSignOut() {
@@ -101,7 +104,7 @@ const LogInView = ({ auth, db }) => {
                     </button>
                 </form>}
             </div>
-            <UpdateTextArea db={db} />
+            <UpdateTextArea />
         </div >
     )
 }

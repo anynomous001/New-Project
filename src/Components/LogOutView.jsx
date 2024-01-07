@@ -1,14 +1,20 @@
 import React from 'react'
 import { FcGoogle } from "react-icons/fc";
 import AuthAccEmail from '../Chunks/AuthAccEmail';
+import { FirebaseContext } from '../App'
+
 
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+
 const provider = new GoogleAuthProvider();
 
 
 
 
-const LogOutView = ({ auth }) => {
+const LogOutView = () => {
+
+    const { auth } = React.useContext(FirebaseContext)
 
     function authSignInWithGoogle() {
         signInWithPopup(auth, provider)

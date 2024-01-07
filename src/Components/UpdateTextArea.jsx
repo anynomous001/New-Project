@@ -1,8 +1,11 @@
 import React from 'react'
 import { collection, addDoc } from "firebase/firestore";
+import { FirebaseContext } from '../App';
+import { serverTimestamp } from "firebase/firestore";
 
-const UpdateTextArea = ({ db }) => {
+const UpdateTextArea = () => {
 
+    const { db, auth } = React.useContext(FirebaseContext)
     const [postUpdate, setPostUpdate] = React.useState('')
 
     function handleChange(e) {
@@ -10,10 +13,15 @@ const UpdateTextArea = ({ db }) => {
     }
 
     async function uploadPost() {
+        const user = auth.currentUser
+        console.log(user.uid)
 
         try {
             const docRef = await addDoc(collection(db, "posts"), {
-                body: postUpdate
+                body: postUpdate,
+                uid: user.uid,
+                timestamp: serverTimestamp()
+
             });
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {

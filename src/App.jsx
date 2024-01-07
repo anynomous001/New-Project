@@ -20,8 +20,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+const FirebaseContext = React.createContext()
 
 function App() {
+
 
   const [loogedIn, setLoggedIn] = React.useState(false)
 
@@ -34,12 +36,15 @@ function App() {
     }
   })
 
+
+
   return (
     <>
-      {loogedIn ? <LogInView auth={auth} db={db} /> : <LogOutView auth={auth} />}
-
+      <FirebaseContext.Provider value={{ auth, db }} >
+        {loogedIn ? <LogInView /> : <LogOutView />}
+      </FirebaseContext.Provider>
     </>
   )
 }
-
+export { FirebaseContext }
 export default App

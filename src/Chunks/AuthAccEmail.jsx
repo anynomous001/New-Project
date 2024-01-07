@@ -3,11 +3,12 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
 } from "firebase/auth";
+import { FirebaseContext } from '../App'
 
 
+const AuthAccEmail = () => {
 
-const AuthAccEmail = ({ auth }) => {
-
+    const { auth } = React.useContext(FirebaseContext); // Use useContext
 
 
     const [email, setEmail] = React.useState('')
@@ -18,7 +19,7 @@ const AuthAccEmail = ({ auth }) => {
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
+                //const user = userCredential.user;
 
             })
             .catch((error) => {
