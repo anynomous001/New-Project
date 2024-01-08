@@ -41,7 +41,7 @@ function App() {
   return (
     <>
       <FirebaseContext.Provider value={{ auth, db }} >
-        {true ? <LogInView /> : <LogOutView />}
+        {loogedIn ? <LogInView /> : <LogOutView />}
       </FirebaseContext.Provider>
     </>
   )

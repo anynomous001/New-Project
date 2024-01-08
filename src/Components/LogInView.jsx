@@ -6,6 +6,8 @@ import { FirebaseContext } from '../App'; // Correct the import
 import { signOut, updateProfile } from "firebase/auth";
 import UpdateTextArea from './UpdateTextArea';
 import MoodFeature from './MoodFeature';
+import RenderPost from './RenderPost';
+
 
 
 const LogInView = () => {
@@ -13,8 +15,9 @@ const LogInView = () => {
 
     const user = auth.currentUser;
     const [displayName, setDisplayName] = React.useState(' ')
-    const [photoURL, setphotoURL] = React.useState(' ')
+    const [photoURL, setphotoURL] = React.useState('')
     const [update, setUpdate] = React.useState(false)
+    const [moodState, setMoodState] = React.useState(0)
 
 
 
@@ -106,10 +109,12 @@ const LogInView = () => {
                         <span> Update</span>
                     </button>
                 </form>}
-                <MoodFeature />
+                <MoodFeature setMoodState={setMoodState} />
 
             </div>
-            <UpdateTextArea />
+            <UpdateTextArea moodState={moodState} />
+
+            <RenderPost />
         </div >
     )
 }

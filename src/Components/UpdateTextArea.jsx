@@ -3,7 +3,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { FirebaseContext } from '../App';
 import { serverTimestamp } from "firebase/firestore";
 
-const UpdateTextArea = () => {
+const UpdateTextArea = ({ moodState }) => {
 
     const { db, auth } = React.useContext(FirebaseContext)
     const [postUpdate, setPostUpdate] = React.useState('')
@@ -12,7 +12,7 @@ const UpdateTextArea = () => {
         setPostUpdate(e.target.value)
     }
 
-    async function uploadPost() {
+    async function uploadPost(e) {
         const user = auth.currentUser
         console.log(user.uid)
 
@@ -20,14 +20,14 @@ const UpdateTextArea = () => {
             const docRef = await addDoc(collection(db, "posts"), {
                 body: postUpdate,
                 uid: user.uid,
-                timestamp: serverTimestamp()
-
+                timestamp: serverTimestamp(),
+                moodState: moodState,
             });
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-
+        setPostUpdate('')
     }
     return (
         <div className="bg-white py-10 flex flex-col items-center">
