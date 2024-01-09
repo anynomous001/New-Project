@@ -2,6 +2,8 @@ import React from 'react'
 import img from '../assets/emojis/1.png'
 import { collection, getDocs } from "firebase/firestore";
 import { FirebaseContext } from '../App';
+import { moodImages } from '../Constants/MoodImagesArray';
+
 
 
 
@@ -18,9 +20,7 @@ const RenderPost = () => {
 
 
         querySnapshot.forEach((doc) => {
-
-            dataArray.push(doc.data())
-
+            dataArray.unshift(doc.data())
         });
 
         setPostData(dataArray)
@@ -50,7 +50,7 @@ const RenderPost = () => {
             return <div key={Math.random()} className="bg-gray-300/30 border-4 border-black h-40 flex flex-col justify-center p-6" >
                 <div className='mb-2 flex items-center gap-8 '>
                     <h3 className='font-semibold text-gray-800/50'>{displayDate(item.createdAt)}</h3>
-                    <img className='w-9 h-9 ' src={`${item.mood}`} />
+                    <img className='w-9 h-9 ' src={`${moodImages[item.mood] && moodImages[item.mood].image}`} />
                 </div>
                 <p className='font-bold tracking-wide text-xl'>
                     {item.body}
