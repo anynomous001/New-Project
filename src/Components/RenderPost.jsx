@@ -24,7 +24,6 @@ const RenderPost = () => {
         });
 
         setPostData(dataArray)
-
         console.log(postData)
 
     }
@@ -45,6 +44,13 @@ const RenderPost = () => {
 
         return `${day} ${month} ${year} - ${hours}:${minutes}`
     }
+
+    function replaceNewlinesWithBrTags(inputString) {
+
+        console.log()
+        return inputString.replace(/\n/g, <br></br>)
+    }
+
     const renderingUpdates = (data) => {
         return data.map(item => {
             return <div key={Math.random()} className="bg-gray-300/30 border-4 border-black h-40 flex flex-col justify-center p-6" >
@@ -53,11 +59,14 @@ const RenderPost = () => {
                     <img className='w-9 h-9 ' src={`${moodImages[item.mood] && moodImages[item.mood].image}`} />
                 </div>
                 <p className='font-bold tracking-wide text-xl'>
-                    {item.body}
+                    {replaceNewlinesWithBrTags(item.body)}
                 </p>
             </div >
         })
     }
+
+
+
 
     return (
         <div className='w-full flex flex-col  items-center'>
