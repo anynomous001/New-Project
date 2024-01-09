@@ -20,8 +20,8 @@ const UpdateTextArea = ({ moodState }) => {
             const docRef = await addDoc(collection(db, "posts"), {
                 body: postUpdate,
                 uid: user.uid,
-                timestamp: serverTimestamp(),
-                moodState: moodState,
+                createdAt: serverTimestamp(),
+                mood: moodState,
             });
             console.log("Document written with ID: ", docRef.id);
         } catch (e) {
