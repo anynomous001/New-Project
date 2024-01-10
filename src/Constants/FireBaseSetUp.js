@@ -8,5 +8,5 @@ const firebaseConfig = {
     storageBucket: "hoody-7d62d.appspot.com",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { FcGoogle } from "react-icons/fc";
-import AuthAccEmail from '../Chunks/AuthAccEmail';
+import AuthAccEmail from '../Components/AuthAccEmail';
 import { FirebaseContext } from '../App'
 
 

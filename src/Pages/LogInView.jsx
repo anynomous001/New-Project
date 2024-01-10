@@ -4,9 +4,9 @@ import { ImCross } from "react-icons/im";
 import { FirebaseContext } from '../App'; // Correct the import
 
 import { signOut, updateProfile } from "firebase/auth";
-import UpdateTextArea from './UpdateTextArea';
-import MoodFeature from './MoodFeature';
-import RenderPost from './RenderPost';
+import UpdateTextArea from '../Components/UpdateTextArea';
+import MoodFeature from '../Components/MoodFeature';
+import RenderPost from '../Components/RenderPost';
 
 
 

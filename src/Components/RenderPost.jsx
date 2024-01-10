@@ -1,6 +1,4 @@
 import React from 'react'
-import img from '../assets/emojis/1.png'
-import { collection, getDocs } from "firebase/firestore";
 import { FirebaseContext } from '../App';
 import { moodImages } from '../Constants/MoodImagesArray';
 
@@ -8,26 +6,22 @@ import { moodImages } from '../Constants/MoodImagesArray';
 
 
 const RenderPost = () => {
-    const { db } = React.useContext(FirebaseContext)
-    const [isFetched, setIsFetched] = React.useState(false)
-    const [postData, setPostData] = React.useState([])
+    const { postData } = React.useContext(FirebaseContext)
 
 
-    async function fetchOnceAndRenderPostsFromDB() {
-        setIsFetched(true)
-        const dataArray = []
-        const querySnapshot = await getDocs(collection(db, "posts"));
+    // const [isFetched, setIsFetched] = React.useState(false)
+    // async function fetchOnceAndRenderPostsFromDB() {
+    //     setIsFetched(true)
+    //     const dataArray = []
+    //     const querySnapshot = await getDocs(collection(db, "posts"));
+    //     querySnapshot.forEach((doc) => {
+    //         dataArray.unshift(doc.data())
+    //     });
+    //     setPostData(dataArray)
+    //     console.log(postData)
+    // }
 
 
-        querySnapshot.forEach((doc) => {
-            dataArray.unshift(doc.data())
-        });
-
-        setPostData(dataArray)
-        console.log(postData)
-
-
-    }
 
     function displayDate(firebaseDate) {
         const date = firebaseDate.toDate()
@@ -46,11 +40,9 @@ const RenderPost = () => {
         return `${day} ${month} ${year} - ${hours}:${minutes}`
     }
 
-    function replaceNewlinesWithBrTags(inputString) {
-
-        console.log()
-        return inputString.replace(/\n/g, <br></br>)
-    }
+    // function replaceNewlinesWithBrTags(inputString) {
+    //     return inputString.replace(/\n/g, <br></br>)
+    // }
 
     const renderingUpdates = (data) => {
         return data.map(item => {
@@ -60,7 +52,8 @@ const RenderPost = () => {
                     <img className='w-9 h-9 ' src={`${moodImages[item.mood] && moodImages[item.mood].image}`} />
                 </div>
                 <p className='font-bold tracking-wide text-xl'>
-                    {replaceNewlinesWithBrTags(item.body)}
+                    {/* {replaceNewlinesWithBrTags(item.body)} */}
+                    {item.body}
                 </p>
             </div >
         })
@@ -71,15 +64,15 @@ const RenderPost = () => {
 
     return (
         <div className='w-full flex flex-col  items-center'>
-            <button
+            {/* <button
                 onClick={fetchOnceAndRenderPostsFromDB}
                 className=" w-[80%] flex  justify-center hover:text-white hover:bg-black gap-x-4 items-center bg-transparent border-4  border-black py-4 
                 font-semibold text-3xl mb-6 rounded-lg ">
                 <span> Fetch Post</span>
-            </button>
+            </button> */}
 
             <div className="w-[80%]  mt-6 space-y-10">
-                {isFetched && renderingUpdates(postData)}
+                {renderingUpdates(postData)}
             </div>
         </div>
     )
