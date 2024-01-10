@@ -26,6 +26,7 @@ const RenderPost = () => {
         setPostData(dataArray)
         console.log(postData)
 
+
     }
 
     function displayDate(firebaseDate) {
