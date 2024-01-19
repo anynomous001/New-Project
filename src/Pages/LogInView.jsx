@@ -56,7 +56,6 @@ const LogInView = () => {
             console.log(error.message)
         })
 
-
         clearInputField(e.target.name)
         clearInputField(e.target.image)
     }

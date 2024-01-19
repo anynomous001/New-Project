@@ -14,7 +14,6 @@ const UpdateTextArea = ({ moodState }) => {
 
     async function uploadPost(e) {
         const user = auth.currentUser
-        console.log(user.uid)
 
         try {
             const docRef = await addDoc(collection(db, "posts"), {
@@ -27,7 +26,9 @@ const UpdateTextArea = ({ moodState }) => {
         } catch (e) {
             console.error("Error adding document: ", e);
         }
+
         setPostUpdate('')
+
     }
     return (
         <div className="bg-white py-10 flex flex-col items-center">
@@ -41,4 +42,4 @@ const UpdateTextArea = ({ moodState }) => {
     )
 }
 
-export default UpdateTextArea
+export default React.memo(UpdateTextArea)

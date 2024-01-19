@@ -31,7 +31,6 @@ const MoodFeature = ({ setMoodState }) => {
                         <img
                             className={`w-16 h-16 hover:w-20 hover:h-20 hover:cursor-pointer `}
                             src={img.image}
-                            id={img.id}
                             alt="Mood images" />
                     </button>
                     {img.expression}
@@ -40,4 +39,4 @@ const MoodFeature = ({ setMoodState }) => {
         </div >)
 }
 
-export default MoodFeature
+export default React.memo(MoodFeature)

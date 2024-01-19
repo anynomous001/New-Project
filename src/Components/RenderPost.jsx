@@ -46,10 +46,11 @@ const RenderPost = () => {
 
     const renderingUpdates = (data) => {
         return data.map(item => {
+            console.log(item.mood)
             return <div key={Math.random()} className="bg-gray-300/30 border-4 border-black h-40 flex flex-col justify-center p-6" >
                 <div className='mb-2 flex items-center gap-8 '>
-                    <h3 className='font-semibold text-gray-800/50'>{displayDate(item.createdAt)}</h3>
-                    <img className='w-9 h-9 ' src={`${moodImages[item.mood] && moodImages[item.mood].image}`} />
+                    <h3 className='font-semibold text-gray-800/50'>{item.createdAt && displayDate(item.createdAt)}</h3>
+                    <img className='w-9 h-9 ' src={`${moodImages[(item.mood) - 1] && moodImages[(item.mood) - 1].image}`} />
                 </div>
                 <p className='font-bold tracking-wide text-xl'>
                     {/* {replaceNewlinesWithBrTags(item.body)} */}
@@ -78,7 +79,7 @@ const RenderPost = () => {
     )
 }
 
-export default RenderPost
+export default React.memo(RenderPost)
 
 
 
