@@ -2,8 +2,9 @@ import React from 'react'
 import { collection, addDoc } from "firebase/firestore";
 import { FirebaseContext } from '../App';
 import { serverTimestamp } from "firebase/firestore";
+import { moodImages } from '../Constants/MoodImagesArray';
 
-const UpdateTextArea = ({ moodState }) => {
+const UpdateTextArea = ({ moodState, setMood, setIsMoodSelected }) => {
 
     const { db, auth } = React.useContext(FirebaseContext)
     const [postUpdate, setPostUpdate] = React.useState('')
@@ -28,7 +29,8 @@ const UpdateTextArea = ({ moodState }) => {
         }
 
         setPostUpdate('')
-
+        setMood(moodImages)
+        setIsMoodSelected(false)
     }
     return (
         <div className="bg-white py-10 flex flex-col items-center">

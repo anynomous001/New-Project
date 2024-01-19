@@ -7,6 +7,7 @@ import { signOut, updateProfile } from "firebase/auth";
 import UpdateTextArea from '../Components/UpdateTextArea';
 import MoodFeature from '../Components/MoodFeature';
 import RenderPost from '../Components/RenderPost';
+import { moodImages } from '../Constants/MoodImagesArray';
 
 
 
@@ -60,6 +61,8 @@ const LogInView = () => {
         clearInputField(e.target.image)
     }
 
+    const [mood, setMood] = React.useState(moodImages)
+    const [isMoodSelected, setIsMoodSelected] = React.useState(false)
 
 
     return (
@@ -108,10 +111,10 @@ const LogInView = () => {
                         <span> Update</span>
                     </button>
                 </form>}
-                <MoodFeature setMoodState={setMoodState} />
+                <MoodFeature setIsMoodSelected={setIsMoodSelected} isMoodSelected={isMoodSelected} setMoodState={setMoodState} mood={mood} setMood={setMood} />
 
             </div>
-            <UpdateTextArea moodState={moodState} />
+            <UpdateTextArea moodState={moodState} setMood={setMood} setIsMoodSelected={setIsMoodSelected} />
 
             <RenderPost />
         </div >

@@ -1,12 +1,10 @@
 import React from 'react'
 import { moodImages } from '../Constants/MoodImagesArray';
 
-const MoodFeature = ({ setMoodState }) => {
+const MoodFeature = ({ setMoodState, setMood, mood, isMoodSelected, setIsMoodSelected }) => {
 
 
 
-    const [mood, setMood] = React.useState(moodImages)
-    const [isMoodSelected, setIsMoodSelected] = React.useState(false)
 
 
     function moodClick(selectedMoodImageid) {
